@@ -21,7 +21,8 @@ public class User {
         return email;
     }
 
-    public void seEmail(){
+    public void setEmail(){
         this.email = email;
+    }
 
 }

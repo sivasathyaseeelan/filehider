@@ -3,6 +3,11 @@ package views;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Scanner;
+
+import model.User;
+import service.GenerateOTP;
+import service.UserService;
 
 public class Welcome {
     public void welcomeSession() {
@@ -22,8 +27,36 @@ public class Welcome {
                 login();
             case 2:
                 signUp();
-             case 3:
+            case 0:
                 System.exit(0);
+        }
+    }
+
+    private void login(){
+
+    }
+
+    private void signUp(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter your Name:");
+        String name = sc.nextLine();
+        System.out.println("Please enter your Email:");
+        String email = sc.nextLine();
+        String genOTP = GenerateOTP.getOTP();
+        System.out.println("Pleaase enter the OTP:");
+        String otp = sc.nextLine();
+        if(otp.equals(genOTP)){
+            User user = new User(name, email);
+            int response = UserService.saveUser(user);
+            switch(response){
+                case 0:
+                    System.out.println("User registered");
+                case 1:
+                    System.out.println("User already exists");
+            }
+        }
+        else{
+            System.out.println("Wrong OTP");
         }
     }
 }
