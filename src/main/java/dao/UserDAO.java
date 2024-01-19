@@ -1,4 +1,4 @@
-package doa;
+package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import db.MyConnection;
 import model.User;
 
-public class UserDOA {
+public class UserDAO {
     public static boolean isExist(String email) throws SQLException {
         Connection connection = MyConnection.getConnection();
         PreparedStatement ps = connection.prepareStatement("select email from users");

@@ -2,17 +2,17 @@ package service;
 
 import java.sql.SQLException;
 
-import doa.UserDOA;
+import dao.UserDAO;
 import model.User;
 
 public class UserService {
     public static Integer saveUser(User user) {
         try{
-            if(UserDOA.isExist(user.getEmail())){
+            if(UserDAO.isExist(user.getEmail())){
             return 0;
             }
             else{
-                UserDOA.saveUser(user);
+                UserDAO.saveUser(user);
             }
         }
         catch (SQLException ex) {

@@ -3,10 +3,13 @@ package views;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import dao.UserDAO;
 import model.User;
 import service.GenerateOTP;
+import service.SendOTPService;
 import service.UserService;
 
 public class Welcome {
@@ -33,7 +36,29 @@ public class Welcome {
     }
 
     private void login(){
-
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter your email:");
+        String email = sc.nextLine();
+        try{
+            if(UserDAO.isExist(email)){
+                String genOTP = GenerateOTP.getOTP();
+                SendOTPService.sendOTP(email, genOTP);
+                System.out.println("Enter OTP:");
+                String otp = sc.nextLine();
+                if(otp.equals(genOTP)){
+                    //Creating a new UserView
+                    new UserView(email).home();
+                }
+                else{
+                    System.out.println("Incorrect OTP");
+                }
+            }
+            else{
+                System.out.println("User Does not exists");
+            }
+        }catch(SQLException e){
+            e.printStackTrace();;
+        }
     }
 
     private void signUp(){
